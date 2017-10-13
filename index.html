@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Game</title>
+	
+	
+</head>
+<body>
+	<canvas id="gamePawan" height="600" width="800"> </canvas>
+
+	<script type="text/javascript">
+		
+		var canvas ;
+		var canvasContext ;
+		var ballX;
+		var ballY;
+		var ballspeedX=15;
+		var ballspeedY=14;
+		var paddelY=100;
+		var count =0;
+        var Score=0;
+
+window.onload=function(){
+
+		canvas=document.getElementById("gamePawan");
+		canvasContext=canvas.getContext("2d");
+		setInterval(both,100);  //1000=1s
+
+
+      canvas.addEventListener("mousemove",function(event){
+      	   paddelY = mouse(event).mouseY-50;
+
+//play
+      	canvas.addEventListener("click",function(event){
+             if (mouse(event).mouseX>195&&mouse(event).mouseX<265&&mouse(event).mouseY>0&&mouse(event).mouseY<30) {
+             	colorTextA("white","black","Play",205,20,195,0,70,30);
+             	reset();
+
+             }
+           })
+
+      	//pause
+  	canvas.addEventListener("click",function(event){
+           if (mouse(event).mouseX>280&&mouse(event).mouseX<350&&mouse(event).mouseY>0&&mouse(event).mouseY<30) {
+             	colorTextA("white","black","Pause",285,20,280,0,70,30);
+             //	alert("Game Pause for continue press ok....its Pawan Kumar Bagri");
+             }
+         }) 
+         //level1
+     	canvas.addEventListener("click",function(event){
+            if (mouse(event).mouseX>365&&mouse(event).mouseX<445&&mouse(event).mouseY>0&&mouse(event).mouseY<30) {
+             	ballspeedX=20;
+		 ballspeedY=18;
+		 colorTextA("white","black","Level1",370,20,365,0,80,30);
+             }
+         })
+
+     	//level2
+          canvas.addEventListener("click",function(event){
+             if (mouse(event).mouseX>455&&mouse(event).mouseX<535&&mouse(event).mouseY>0&&mouse(event).mouseY<30) {
+             	ballspeedX=25;
+		        ballspeedY=24;
+		        colorTextA("white","black","Level2",460,20,455,0,80,30);
+
+             }
+         })
+
+         //level3
+            canvas.addEventListener("click",function(event){
+            if (mouse(event).mouseX>545&&mouse(event).mouseX<625&&mouse(event).mouseY>0&&mouse(event).mouseY<30) {
+              ballspeedX=30;
+		        ballspeedY=30;
+		        colorTextA("white","black","Level3",550,20,545,0,80,30);
+             	
+             }
+
+      	})   
+
+      })
+}
+    function  both(){
+    	drow();
+    	move();
+    }
+    //drow
+ function drow(){
+ 	//backgournd
+		canvasContext.fillStyle="black";
+		canvasContext.fillRect(0,0,800,600); 
+		colorText("green","Pawan",150,600); 
+		//Score
+		colorTextA("brown","gray",Score,150,160,130,130,60,50);   
+		//ball
+		canvasContext.fillStyle="white";
+		canvasContext.fillRect(ballX,ballY,10,10);     
+		//paddels
+		canvasContext.fillStyle="yellow";
+		//left
+		canvasContext.fillRect(0,paddelY,10,100);
+		//right
+		canvasContext.fillRect(790,ballY-50,10,100);
+		colorText("green",count,350,350);
+		colorTextA("white","red","Play",205,20,195,0,70,30);
+		colorTextA("white","red","Pause",285,20,280,0,70,30);
+		colorTextA("white","blue","Level1",370,20,365,0,80,30);
+		colorTextA("white","blue","Level2",460,20,455,0,80,30);
+		colorTextA("white","blue","Level3",550,20,545,0,80,30);
+		
+
+		
+	}
+	function colorRect(color,x,y,width,height){
+		canvasContext.fillStyle=color;
+		canvasContext.fillRect(x,y,width,height);
+	}
+	function colorText(color,text,x,y,z){
+		canvasContext.fillStyle=color;
+		canvasContext.font="200px  arile"
+		canvasContext.fillText(text,x,y)
+	}
+	function colorTextA(color2,color1,text,x,y,m,n,p,q){
+		colorRect(color1,m,n,p,q);
+		canvasContext.fillStyle=color2;
+		canvasContext.font="25px arile";
+		canvasContext.fillText(text,x,y)
+		
+	}
+
+    //reset
+    function reset(){
+    	ballX = 400;
+    	ballY = 300;
+    	
+    }
+
+//mouse count
+function mouse(event){
+	var mouseX=event.clientX;
+	var mouseY=event.clientY;
+	return{
+		mouseX,
+		mouseY
+	}
+}
+
+
+
+    //MOve
+    function move(){
+    	ballX=ballX+ballspeedX;
+    	ballY=ballY+ballspeedY;
+  	if(ballX>=canvas.width){
+          
+    		ballspeedX=-ballspeedX;
+    	
+    	}
+      	if(ballX<=0){
+      		if(ballY>paddelY&&ballY<paddelY+100){
+    		ballspeedX=-ballspeedX;
+    		Score=Score+5;
+    	}
+    	else{
+    		reset();
+    		count++;
+    		if(count==4){
+    			alert("Game Is Over And your Score is : "+Score+" ....Presented By Mr. Pawan Kumar Bagri");
+    			count=0;
+    			Score=0;
+    		}
+    	}
+    	}
+    	if (ballY>=600) {
+    		ballspeedY=-ballspeedY;
+    	}
+    	if (ballY<=0) {
+    		ballspeedY=-ballspeedY;
+    	}  
+    }
+    
+
+	</script>
+</body>
+</html>
